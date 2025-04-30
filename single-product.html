@@ -255,7 +255,43 @@ https://templatemo.com/tm-571-hexashop
             });
         });
 
-    </script>
+    </script
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Obtener parámetros de la URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const productName = urlParams.get('product');
+            const price = urlParams.get('price');
+            const image = urlParams.get('image');
+        
+            // Si hay parámetros, actualizar la página
+            if(productName && price && image) {
+                // Actualizar título y precio
+                document.querySelector('.right-content h4').textContent = productName.replace(/-/g, ' ');
+                document.querySelector('.right-content .price').textContent = `$${price}`;
+                
+                // Actualizar imágenes (puedes ajustar según necesites)
+                document.querySelector('.left-images img:first-child').src = `assets/images/${image}`;
+                document.querySelector('.left-images img:last-child').src = `assets/images/${image.replace('.jpg', '-02.jpg')}`;
+                
+                // Actualizar total inicial
+                updateTotal(parseInt(price));
+            }
+        
+            // Función para actualizar el total cuando cambia la cantidad
+            function updateTotal(unitPrice) {
+                const quantity = parseInt(document.querySelector('input[name="quantity"]').value);
+                const total = unitPrice * quantity;
+                document.querySelector('.total h4').textContent = `Total: $${total}.00`;
+            }
+        
+            // Escuchar cambios en la cantidad
+            document.querySelector('input[name="quantity"]').addEventListener('change', function() {
+                updateTotal(parseInt(price));
+            });
+        });
+        </script>
 
   </body>
 
